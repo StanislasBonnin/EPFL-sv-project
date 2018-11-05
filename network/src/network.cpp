@@ -35,9 +35,9 @@ bool Network::add_link(const size_t& a, const size_t& b)
 	
 	for(it at=links.begin(); at!=links.end(); ++at)
 	{ 
-		if(((at->first==b) and (at->second==a) )){ return false; }
-		 //or ((at->first==a) and (at->second==b)))
-		
+		if(((at->first==b) and (at->second==a) )
+		 or ((at->first==a) and (at->second==b)))
+		{ return false; }
 	}
 	links.insert(std::make_pair(a,b));
 	links.insert(std::make_pair(b,a));
@@ -48,8 +48,6 @@ size_t Network::random_connect(const double& mean)
 { 
 	links.clear();
 	std::vector<int> tab(values.size());
-
-	
 	
 	int somme=0;
 	for (size_t l(0); l<values.size() ; ++l)
@@ -86,7 +84,7 @@ size_t Network::set_values(const std::vector<double>& tab)
 		{ values[i]=tab[i];}
 		return tab.size();
 	}
-	
+	return 0;
 }
 	
 size_t Network::size() const
@@ -114,7 +112,7 @@ std::vector<double> Network::sorted_values() const
 std::vector<size_t> Network::neighbors(const size_t& n) const
 {
 	std::vector<size_t> neig;
-	if(n>values.size() or n<=0) return neig;
+	if(n>values.size() or n<0) return neig;
 	for (cit at=links.begin(); at!= links.end(); ++at)
 	{
 		if(at->first==n){ 
